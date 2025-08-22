@@ -1,21 +1,27 @@
 export type User = {
   id: number;
-  email: string;
+  username: string;
   password: string;
-  name: string;
+};
+
+type Storage = {
+  id: string;
+  state: "ok" | "error";
 };
 export type Device = {
   id: number;
   siteId: number;
-  name: string;
-  type: string;
-  status: "online" | "offline";
-  lastSeen: string;
+  title: string;
+  description: string;
+  model: string;
+  version: string;
+  enabled: boolean;
+  connected: boolean;
+  timezone: string;
+  storage: Storage[];
 };
 export type Site = {
   id: number;
-  name: string;
-  userId: number;
-  location?: string;
-  devices?: Device[];
+  title: string;
+  owner: number;
 };
