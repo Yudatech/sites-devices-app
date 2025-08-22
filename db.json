@@ -1,0 +1,105 @@
+{
+  "sites": [
+    { "id": 1, "title": "Demo site 1", "owner": "demouser1" },
+    { "id": 2, "title": "Demo site 2", "owner": "demouser1" },
+    { "id": 3, "title": "Demo site 3", "owner": "demouser2" }
+  ],
+  "devices": [
+    {
+      "id": 1,
+      "site_id": 1,
+      "title": "Demo camera 1",
+      "description": "Overview of main entrance",
+      "model": "M2025-LE",
+      "version": "6.50.2",
+      "enabled": true,
+      "connected": true,
+      "timezone": "CET-1",
+      "storages": [
+        { "id": "NetworkShare", "state": "ok" },
+        { "id": "SDCard", "state": "ok" }
+      ]
+    },
+    {
+      "id": 2,
+      "site_id": 1,
+      "title": "Demo camera 2",
+      "description": "Cash register from above",
+      "model": "P1428-E",
+      "version": "7.20",
+      "enabled": true,
+      "connected": false,
+      "timezone": "CET-1",
+      "storages": [
+        { "id": "NetworkShare", "state": "ok" },
+        { "id": "SDCard", "state": "unavailable" }
+      ]
+    },
+    {
+      "id": 3,
+      "site_id": 1,
+      "title": "Demo camera 3",
+      "description": "Cash register from south east",
+      "model": "Q6000-E",
+      "version": "7.20",
+      "enabled": false,
+      "connected": true,
+      "timezone": "CET-1",
+      "storages": [
+        { "id": "NetworkShare", "state": "ok" },
+        { "id": "SDCard", "state": "ok" }
+      ]
+    },
+    { "id": 4,
+     "site_id": 2,
+     "title": "Demo camera 4",
+     "description": "Overview of warehouse",
+     "model": "Q8641-E",
+     "version": "7.30",
+     "enabled": true,
+     "connected": true,
+     "timezone": "CET-1",
+      "storages": [
+        { "id": "NetworkShare", "state": "ok" }
+      ]
+    },
+    {
+      "id": 5,
+      "site_id": 2,
+      "title": "Demo hornspeaker 1",
+      "description": "Store ceiling loudspeaker",
+      "model": "C3003-E",
+      "version": "1.65",
+      "enabled": true,
+      "connected": true,
+      "timezone": "CET-1",
+      "storages": []
+    },
+    {
+      "id": 6,
+      "site_id": 3,
+      "title": "Demo camera 5",
+      "description": "Back entrance",
+      "model": "V5914",
+      "version": "6.55",
+      "enabled": false,
+      "connected": true,
+      "timezone": "CET-1",
+      "storages": [
+        { "id": "SDCard", "state": "ok" }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "username": "demouser1",
+      "password": "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e"
+    },
+    {
+      "id": 2,
+      "username": "demouser2",
+      "password": "6cf615d5bcaac778352a8f1f3360d23f02f34ec182e259897fd6ce485d7870d4"
+    }
+  ]
+}
