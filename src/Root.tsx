@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useSitesByOwner, login } from "./hooks/useSitesByOwner";
 import type { User } from "./types";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 export default function LoginAndSites() {
   const qc = useQueryClient();
@@ -25,8 +27,8 @@ export default function LoginAndSites() {
     onSuccess: (u) => setUser(u), // <-- triggers sites query below
   });
 
-  // 2) Fetch sites owned by this user (replace `.username` with the field that matches your sites.owner)
-  const ownerKey = user?.username; // e.g. "demouser2"
+  // 2) Fetch sites owned by this user
+  const ownerKey = user?.username;
   const {
     data: sites,
     isLoading: sitesLoading,
@@ -56,14 +58,14 @@ export default function LoginAndSites() {
         <h1>Login</h1>
         <label>
           Username
-          <input
+          <Input
             value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
         </label>
         <label>
           Password
-          <input
+          <Input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -72,18 +74,36 @@ export default function LoginAndSites() {
         {error && (
           <p style={{ color: "crimson" }}>{(error as Error).message}</p>
         )}
-        <button type="submit" disabled={isPending}>
+        <Button
+          type="submit"
+          variant="outline"
+          className="w-full transition-all hover:scale-[1.02]"
+          disabled={isPending}
+        >
+          {isPending ? (
+            <>
+              {/* <Loader2 className="mr-2 h-4 w-4 animate-spin" /> */}
+              Signing in...
+            </>
+          ) : (
+            <>
+              {/* <LogIn className="mr-2 h-4 w-4" /> */}
+              Sign In
+            </>
+          )}
+        </Button>
+        {/* <Button type="submit" disabled={isPending}>
           {isPending ? "Signing in…" : "Sign in"}
-        </button>
+        </Button> */}
       </form>
     );
   }
 
   return (
-    <div style={{ display: "grid", gap: 12 }}>
+    <div className="grid gap-4">
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <h2>Sites for {ownerKey}</h2>
-        <button onClick={logout}>Logout</button>
+        <Button onClick={logout}>Logout</Button>
       </div>
 
       {sitesLoading && <p>Loading sites…</p>}
