@@ -25,14 +25,3 @@ export type Site = {
   title: string;
   owner: number;
 };
-
-export type LoginResult =
-  | { success: true; user: User }
-  | { success: boolean; error?: string };
-
-export type AuthContextType = {
-  user: User | null;
-  login: (username: string, password: string) => Promise<LoginResult>;
-  logout: () => void;
-  loading: boolean;
-};
