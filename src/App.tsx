@@ -19,6 +19,7 @@ import {
 import { AlertCircle, Shield } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { DashboardHeader } from "./components/PageHeader";
+import { SitesContent } from "./components/SitesContent";
 
 const client = new QueryClient();
 
@@ -45,13 +46,13 @@ function Root() {
     if (user) localStorage.setItem("currentUser", JSON.stringify(user));
     else localStorage.removeItem("currentUser");
   }, [user]);
-  const owner = user?.username;
-  const { data, isLoading, isError, refetch } = useQuery({
-    queryKey: ["sites", { owner }],
-    queryFn: () => getSitesByOwner(owner || ""),
-    enabled: !!owner, //only run query if owner is set
-    staleTime: Infinity,
-  });
+  //   const owner = user?.username;
+  //   const { data, isLoading, isError, refetch } = useQuery({
+  //     queryKey: ["sites", { owner }],
+  //     queryFn: () => getSitesByOwner(owner || ""),
+  //     enabled: !!owner, //only run query if owner is set
+  //     staleTime: Infinity,
+  //   });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,7 +117,6 @@ function Root() {
               <Button
                 type="submit"
                 className="w-full transition-all hover:scale-[1.02]"
-                disabled={isLoading}
               >
                 Sign in
               </Button>
@@ -130,17 +130,10 @@ function Root() {
   return (
     <div className="min-h-screen bg-background">
       <DashboardHeader user={user} logout={logout} />
-
-      {isLoading && <p>Loading sites…</p>}
-      {isError && (
-        <p>
-          Could not load sites. <Button onClick={() => refetch()}>Retry</Button>
-        </p>
-      )}
-      {data?.length === 0 && <p>No sites for this user.</p>}
-      {data?.map((site) => (
+      <SitesContent user={user} />
+      {/* {data?.map((site) => (
         <SiteCard key={site.id} site={site} />
-      ))}
+      ))} */}
     </div>
   );
 }
