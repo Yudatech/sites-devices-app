@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/card";
 import { AlertCircle, Shield } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { DashboardHeader } from "./components/PageHeader";
 
 const client = new QueryClient();
 
@@ -126,19 +127,9 @@ function Root() {
     );
   }
 
-  if (user && user.username) {
-  }
-
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h2 className="text-2xl font-semibold text-foreground flex items-center gap-2">
-            Sites Overview for {user.username}
-          </h2>
-          <Button onClick={() => logout()}>Logout</Button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-background">
+      <DashboardHeader user={user} logout={logout} />
 
       {isLoading && <p>Loading sites…</p>}
       {isError && (
