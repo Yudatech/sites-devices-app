@@ -2,13 +2,14 @@ import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import type { Site, User } from "../types";
 import axios from "axios";
 
-const api = axios.create({ baseURL: "" });
+const api = axios.create({ baseURL: "/api" });
 
 export async function login(username: string, password: string): Promise<User> {
   const { data } = await api.get<User[]>(`/users`, {
     params: { username, password },
   });
-  if (!data.length) throw new Error("Invalid credentials");
+
+  if (!data.length || !data[0].id) throw new Error("Invalid credentials");
   return data[0];
 }
 
