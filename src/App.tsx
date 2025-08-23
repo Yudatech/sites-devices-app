@@ -33,6 +33,15 @@ function Root() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!user && window.location.pathname !== "/login") {
+      window.history.replaceState(null, "", "/login");
+    }
+    if (user && window.location.pathname === "/login") {
+      window.history.replaceState(null, "", "/");
+    }
+  }, [user]);
+
+  useEffect(() => {
     const raw = localStorage.getItem("currentUser");
     if (raw) setUser(JSON.parse(raw));
   }, []);
@@ -81,6 +90,7 @@ function Root() {
                 <label htmlFor="username">
                   Username
                   <Input
+                    data-testid="username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
@@ -90,6 +100,7 @@ function Root() {
                 <label htmlFor="password">
                   Password
                   <Input
+                    data-testid="password"
                     type="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -103,6 +114,7 @@ function Root() {
                 </Alert>
               )}
               <Button
+                data-testid="sign-in-button"
                 type="submit"
                 className="w-full transition-all hover:scale-[1.02]"
               >
@@ -116,7 +128,10 @@ function Root() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="min-h-screen bg-background"
+      data-testid="root-sites-overview"
+    >
       <DashboardHeader user={user} logout={logout} />
       <SitesContent user={user} />
     </div>

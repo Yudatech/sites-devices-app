@@ -11,16 +11,6 @@ import { Wifi, WifiOff, ChevronUp, ChevronDown } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState } from "react";
 
-const StatusBadge = (enabled: boolean) => {
-  return (
-    <Badge
-      className={`text-xs ${
-        enabled ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
-      }`}
-    ></Badge>
-  );
-};
-
 export function DeviceCard({ device }: { device: Device }) {
   const [isExpanded, setIsExpanded] = useState(false);
   return (
@@ -98,7 +88,10 @@ export function DeviceCard({ device }: { device: Device }) {
                 <div className="flex justify-between items-center">
                   <span className="text-muted-foreground">Storage:</span>
                   {device.storage.map((s) => (
-                    <span className="font-medium">{`${s.id}: ${s.state}`}</span>
+                    <span
+                      key={s.id}
+                      className="font-medium"
+                    >{`${s.id}: ${s.state}`}</span>
                   ))}
                 </div>
               )}

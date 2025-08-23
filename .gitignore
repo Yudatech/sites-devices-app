@@ -3,3 +3,7 @@ node_modules/
 
 # Ignore build output
 dist/
+
+# Ignore test output
+test-results/
+coverage/
