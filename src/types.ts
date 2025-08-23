@@ -21,7 +21,6 @@ export type Device = {
   timezone: string;
   storage: Storage[];
 };
-
 export type Site = {
   id: number;
   title: string;

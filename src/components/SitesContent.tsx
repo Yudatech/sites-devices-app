@@ -6,9 +6,24 @@ import { Button } from "@/components/ui/button";
 import { Building2 } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { useState } from "react";
+import { DevicesDetailView } from "./DevicesDetailView";
 
 export function SitesContent({ user }: { user: User | null }) {
   const [selectedSite, setSelectedSite] = useState<Site | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleViewDevices = (site: Site) => {
+    setSelectedSite(site);
+    setDialogOpen(true);
+  };
+
+  const handleDialogClose = (open: boolean) => {
+    setDialogOpen(open);
+    if (!open) {
+      setSelectedSite(null);
+    }
+  };
+
   if (!user) return null;
   const owner = user.username;
   const {
@@ -47,17 +62,23 @@ export function SitesContent({ user }: { user: User | null }) {
       )}
       {sites?.length === 0 && <p>No sites for this user.</p>}
       {sites && sites?.length > 0 && (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {sites?.map((site) => (
             <SiteCard
               key={site.id}
               site={site}
-              onViewDevices={() => setSelectedSite(site)}
+              onViewDevices={() => handleViewDevices(site)}
             />
           ))}
         </div>
       )}
-      {selectedSite && <>{`show site device ${selectedSite.id}`}</>}
+      {selectedSite && (
+        <DevicesDetailView
+          site={selectedSite}
+          open={dialogOpen}
+          onOpenChange={handleDialogClose}
+        />
+      )}
     </div>
   );
 }

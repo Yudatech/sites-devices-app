@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
-import {
-  useQuery,
-  QueryClient,
-  QueryClientProvider,
-} from "@tanstack/react-query";
-import { getSitesByOwner, login } from "./api";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { login } from "./api";
 import type { User } from "./types";
-import SiteCard from "./components/SiteCard";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -46,13 +41,6 @@ function Root() {
     if (user) localStorage.setItem("currentUser", JSON.stringify(user));
     else localStorage.removeItem("currentUser");
   }, [user]);
-  //   const owner = user?.username;
-  //   const { data, isLoading, isError, refetch } = useQuery({
-  //     queryKey: ["sites", { owner }],
-  //     queryFn: () => getSitesByOwner(owner || ""),
-  //     enabled: !!owner, //only run query if owner is set
-  //     staleTime: Infinity,
-  //   });
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -131,9 +119,6 @@ function Root() {
     <div className="min-h-screen bg-background">
       <DashboardHeader user={user} logout={logout} />
       <SitesContent user={user} />
-      {/* {data?.map((site) => (
-        <SiteCard key={site.id} site={site} />
-      ))} */}
     </div>
   );
 }

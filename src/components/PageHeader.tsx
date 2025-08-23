@@ -22,16 +22,11 @@ export function DashboardHeader({
   return (
     <div className="border-b bg-gray-100 w-full px-6 py-6">
       <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">
-            Sites & Devices Management
-          </h1>
-          <p className="text-sm text-foreground/70">
-            Monitor and manage your sites and devices efficiently
-          </p>
-        </div>
+        <h1 className="text-3xl font-bold text-foreground">
+          Sites & Devices Management
+        </h1>
 
-        <div className="flex items-center gap-4">
+        <div className="flex flex-wrap items-center gap-4">
           <div className="text-right">
             <p className="text-sm font-medium text-foreground">Welcome back!</p>
           </div>
