@@ -1,6 +1,6 @@
 import { User, Site } from "@/types";
 import { useQuery } from "@tanstack/react-query";
-import { getSitesByOwner } from "../api";
+import { getSitesByOwner } from "../api/siteService";
 import SiteCard from "./SiteCard";
 import { Button } from "@/components/ui/button";
 import { Building2 } from "lucide-react";
