@@ -10,7 +10,8 @@
     "test:e2e": "playwright test",
     "test:all": "npm run test && npm run test:e2e",
     "build": "vite build",
-    "start": "concurrently \"vite --port 5173 --strictPort\" \"json-server --watch db.json --port 4000\""
+    "start": "concurrently \"vite --port 5173 --strictPort\" \"json-server --watch db.json --port 4000\"",
+    "e2e:ci": "playwright test --reporter=github"
   },
   "keywords": [],
   "author": "",

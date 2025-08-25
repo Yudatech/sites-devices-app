@@ -20,5 +20,9 @@ jobs:
       - uses: actions/setup-node@v4
         with: { node-version: 20, cache: "npm" }
       - run: npm ci
-      - uses: microsoft/playwright-github-action@v1
-      - run: npm run e2e
+      - name: Install Playwright browsers & system deps
+        run: npx playwright install --with-deps
+      - name: Run E2E
+        run: npm run e2e:ci
+        env:
+          CI: true
