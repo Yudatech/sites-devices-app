@@ -10,6 +10,13 @@ import type { User as UserProps } from "@/types";
 import { LogOut, User, Settings } from "lucide-react";
 import { Button } from "./ui/button";
 
+/**
+ * Dashboard header with title + user menu.
+ * Uses shadcn/ui DropdownMenu (Radix under the hood).
+ * - Returns null if no user (keeps render tree clean).
+ * - Menu content is portal-rendered and only present after opening.
+ */
+
 export function DashboardHeader({
   user,
   logout,
@@ -17,6 +24,7 @@ export function DashboardHeader({
   user: UserProps | null;
   logout: () => void;
 }) {
+  // Guard clause: when logged out, header is not rendered at all.
   if (!user) return null;
 
   return (
@@ -32,14 +40,17 @@ export function DashboardHeader({
           </div>
 
           <DropdownMenu>
-            <DropdownMenuTrigger>
-              <Button
-                variant="outline"
-                className="flex items-center gap-2 bg-transparent"
+            <DropdownMenuTrigger asChild>
+              <button
+                type="button"
+                className="flex items-center gap-2 border bg-transparent shadow-md hover:bg-primary p-2 rounded-lg cursor-pointer
+                focus-visible:border-ring"
+                aria-haspopup="menu"
+                data-testid="user-menu-trigger"
               >
-                <User className="h-4 w-4" />
+                <User className="h-4 w-4" aria-hidden="true" />
                 {user.username}
-              </Button>
+              </button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -51,7 +62,7 @@ export function DashboardHeader({
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={logout}
-                className="text-red-600 focus:text-red-600"
+                className="text-red-600 focus:text-red-600 cursor-pointer"
               >
                 <LogOut className="mr-2 h-4 w-4" />
                 Sign Out

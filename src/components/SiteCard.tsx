@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import type { Site } from "@/types";
 import { Button } from "./ui/button";
 import {
@@ -16,6 +17,7 @@ import {
   PowerOff,
 } from "lucide-react";
 import { Badge } from "./ui/badge";
+import type { Device } from "@/types";
 
 export default function SiteCard({
   site,
@@ -24,11 +26,37 @@ export default function SiteCard({
   site: Site;
   onViewDevices: (site: Site) => void;
 }) {
-  const { devices, title, id } = site;
-  const connectedDevices = devices.filter((d) => d.connected).length;
-  const enabledDevices = devices.filter((d) => d.enabled).length;
-  const totalDevices = devices.length;
-  const notConnectedDevices = devices.filter((device) => !device.connected);
+  const { title, id } = site;
+  const devicesArr: Device[] = Array.isArray(site.devices) ? site.devices : [];
+  // Derive device stats once; memoized to avoid recomputation across re-renders
+  console.log("devicesArr", devicesArr);
+  const {
+    totalDevices,
+    connectedDevices,
+    enabledDevices,
+    notConnectedDevices,
+  } = useMemo(() => {
+    let connected = 0;
+    let enabled = 0;
+    const notConnected: Device[] = [];
+
+    for (const d of devicesArr) {
+      if (d.connected) connected += 1;
+      else notConnected.push(d);
+      if (d.enabled) enabled += 1;
+    }
+
+    return {
+      totalDevices: devicesArr.length,
+      connectedDevices: connected,
+      enabledDevices: enabled,
+      notConnectedDevices: notConnected,
+    };
+  }, [devicesArr]);
+
+  const allConnected = totalDevices > 0 && connectedDevices === totalDevices;
+  const allEnabled = totalDevices > 0 && enabledDevices === totalDevices;
+  const noneConnected = totalDevices > 0 && connectedDevices === 0;
 
   return (
     <Card className="group hover:shadow-lg transition-all duration-200 hover:scale-[1.02] border-border/50 hover:border-primary/20">
@@ -43,7 +71,9 @@ export default function SiteCard({
               <Badge className="bg-primary/10 text-primary border-primary/20 flex-shrink-0 ml-2">
                 <div className="flex items-center gap-1">
                   <HardDrive className="h-3 w-3" />
-                  <span className="capitalize">{devices.length} devices</span>
+                  <span className="capitalize">
+                    {devicesArr.length} devices
+                  </span>
                 </div>
               </Badge>
             </CardTitle>
@@ -100,7 +130,7 @@ export default function SiteCard({
           </div>
         </div>
       </CardContent>
-      <div className="p-4 pt-p mt-auto">
+      <div className="p-4 mt-auto">
         {totalDevices > 0 && (
           <div className="flex gap-2 flex-wrap mb-4">
             {notConnectedDevices.length > 0 && (
@@ -124,7 +154,8 @@ export default function SiteCard({
                 </div>
               </Card>
             )}
-            {connectedDevices === totalDevices && (
+            {/* Summary badges */}
+            {allConnected && (
               <Badge
                 variant="secondary"
                 className="text-xs bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400"
@@ -132,7 +163,7 @@ export default function SiteCard({
                 All Connected
               </Badge>
             )}
-            {enabledDevices === totalDevices && (
+            {allEnabled && (
               <Badge
                 variant="secondary"
                 className="text-xs bg-blue-100 text-blue-800 dark:bg-blue-900/20 dark:text-blue-400"
@@ -140,7 +171,7 @@ export default function SiteCard({
                 All Enabled
               </Badge>
             )}
-            {connectedDevices === 0 && (
+            {noneConnected && (
               <Badge
                 variant="secondary"
                 className="text-xs bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400"
@@ -153,7 +184,7 @@ export default function SiteCard({
 
         {/* Action Button */}
         <Button
-          className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors bg-transparent"
+          className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors bg-transparent cursor-pointer"
           variant="outline"
           onClick={() => onViewDevices(site)}
           disabled={totalDevices === 0}

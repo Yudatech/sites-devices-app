@@ -103,7 +103,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
             <Button
               data-testid="sign-in-button"
               type="submit"
-              className="w-full transition-all hover:scale-[1.02]"
+              className="w-full transition-all hover:scale-[1.02] cursor-pointer"
               disabled={submitting}
             >
               {submitting ? "Signing in..." : "Sign in"}

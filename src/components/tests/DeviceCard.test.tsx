@@ -2,25 +2,7 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DeviceCard } from "../DeviceCard";
 import { describe, test, expect } from "vitest";
-
-// Simple factory to build devices
-function makeDevice(overrides: Partial<any> = {}) {
-  return {
-    id: 1,
-    title: "Temp Sensor",
-    description: "Main hallway",
-    model: "TS-100",
-    version: "1.2.3",
-    timezone: "Europe/Stockholm",
-    enabled: true,
-    connected: true,
-    storage: [
-      { id: "sd-1", state: "ok" },
-      { id: "ssd-2", state: "warn" },
-    ],
-    ...overrides,
-  } as any; // cast to avoid over-constraining optional fields in tests
-}
+import { makeDevice } from "./utils";
 
 describe("<DeviceCard />", () => {
   test("renders header info and connected badge", () => {

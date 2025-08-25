@@ -24,6 +24,6 @@ export type Device = {
 export type Site = {
   id: number;
   title: string;
-  owner: number;
-  devices: Device[];
+  owner: string;
+  devices?: Device[];
 };

@@ -43,7 +43,7 @@ export function DeviceCard({ device }: { device: Device }) {
             <Button
               variant="ghost"
               size="sm"
-              className="h-8 w-8 p-0 bg-transparent hover:bg-primary/10"
+              className="h-8 w-8 p-0 bg-transparent hover:bg-primary/10 cursor-pointer"
               onClick={() => setIsExpanded(!isExpanded)}
             >
               {isExpanded ? (
