@@ -5,7 +5,7 @@ import "./index.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    {/* TODO: ErrorBoundary */}
+    {/* TODO: add ErrorBoundary and fallback */}
     <App />
   </React.StrictMode>
 );
